@@ -9,7 +9,7 @@ def check_winner(d:dict, combo_list:list)->bool:
             return True
     return False
 
-def game():
+def game()->str:
     """
     Here lives the main game loop
     """
@@ -24,6 +24,7 @@ def game():
     o_player = 'O'
     current_player = x_player
     winner = False
+    w_player = ''
     while turns < 9 and not winner:
         board.display_board(dboard)
         valid_move = False
@@ -32,7 +33,7 @@ def game():
         turns += 1
         winner = check_winner(dboard, combo_list)
         if winner:
-            
+            w_player = current_player
             print(f"Player {current_player} wins!")
             break
         if current_player == x_player:
@@ -40,10 +41,15 @@ def game():
         else:
             current_player = x_player
     board.display_board(dboard)
-    if winner:
-        print(f"Winner: {current_player}")
-    else:
-        print("its a draw")
+    return w_player
+    #if winner:
+    #    print(f"Winner: {current_player}")
+    #else:
+    #    print("its a draw")
     print("Game Over")     
 if __name__ == "__main__":
-    game()
+    win = game()
+    if len(win) > 0:
+        print(f"Player {win} wins!")
+    else:
+        print("its a draw")
