@@ -1,21 +1,13 @@
-from app import game
-
-def display_menu():
-    print("welcome to tic tac toe")
-    print("1. one player")
-    print("2. two players")
-    print("3. exit")
-    choice = input("enter your choice: ")
-    return choice
-
-def get_choice():
-    choice = display_menu()
-    while choice not in ["1", "2", "3"]:
-        choice = display_menu()
-    return choice
-
+def display_menu()-> int:
+    """ display_menu function shows the main menu and gets user choice"""
+    print("Welcome to Tic Tac Toe!")
+    print("1. One Player Game")
+    print("2. Two Player Game")
+    print("3. Exit")
+    choice = input("Please select an option (1-3): ")
+    return int(choice)
 
 if __name__ == "__main__":
-  get_choice()
+    display_menu()
     
  
