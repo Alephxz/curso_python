@@ -3,6 +3,7 @@ Docstring for game_tournament.Game
 Game class represents a game in the tournament. It has a name, a sport, and a list of teams.
 """
 import random
+import json
 from Team import Team
 from Sport import Sport
 from Athlete import Athlete
@@ -36,7 +37,7 @@ class Game:
         return f"{self.team_a.name} vs {self.team_b.name} - Score: {self.score[self.team_a.name]}:{self.score[self.team_b.name]}"
     def __repr__(self):
         """ String representation of the Game class. """
-        return f"Game(team_a={self.team_a}, team_b={self.team_b}, score={self.score})"
+        return f"Game(team_a={repr(self.team_a)}, team_b={repr(self.team_b)}, score={self.score})"
     def to_json(self):
         """ Convert the Game object to a JSON string. """
         return {
@@ -44,13 +45,14 @@ class Game:
             "team_b": self.team_b.to_json(),
             "score": self.score
         }
-   
+
 def a_game():
-    players_mex=["chicharito", "piojo", "guardado", "hector moreno", "rafa marquez", "salcido", "vela", "dos santos", "herrera", "layun", "corona"]
-    players_arg=["messi", "di maria", "aguero", "higuain", "mascherano", "biglia", "dybala", "paredes", "tagliafico", "otamendi", "zabaleta"]
-    sport = Sport("Futbol",11,"FIFA")
-    team_mex = Team("Mexico",sport)
-    team_arg = Team("Argentina",sport)
+    """ Example usage of the Game class. """
+    players_mex = ['Chicharito','Piojo','Guardado','Hector Moreno','Rafa Marquez','Salcido','Vela','Dos Santos','Herrera','Layun','Corona']
+    players_arg = ['Messi','Di Maria','Aguero','Higuain','Mascherano','Biglia','Dybala','Paredes','Tagliafico','Otamendi','Zabaleta']
+    sport = Sport("Futbol", 11, "FIFA")
+    team_mex = Team("Mexico", sport)
+    team_arg = Team("Argentina", sport)
     for player in players_mex:
         team_mex.add_athlete(Athlete(player))
     for player in players_arg:
@@ -58,10 +60,54 @@ def a_game():
     game = Game(team_mex, team_arg)
     game_string = game.to_json()
     return game_string
+
 def save_game_to_json(game_data, filename):
-    """ Save the Game object to a JSON file. """
-    with open(filename, "w", encoding="utf-8") as f:
-        json.dump(game_data, f, indent=4)   
+    """ Save the game object to a JSON file. """
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(game_data, f, indent=4)
+def a_tournament():
+    """ Example usage of the Game class. """
+    players_mex = ['Chicharito','Piojo','Guardado','Hector Moreno','Rafa Marquez','Salcido','Vela','Dos Santos','Herrera','Layun','Corona']
+    players_arg = ['Messi','Di Maria','Aguero','Higuain','Mascherano','Biglia','Dybala','Paredes','Tagliafico','Otamendi','Zabaleta']
+    players_bra = ['Neymar','Ronaldo','Ronaldinho','Pele','Maradona','Zidane','Platini','Cruyff','Beckenbauer','Puskas','Di Stefano']
+    players_ger = ['Muller','Klose','Lahm','Schweinsteiger','Podolski','Kroos','Ozil','Gomez','Khedira','Boateng','Hummels']
+    players_esp = ['Xavi','Iniesta','Casillas','Ramos','Pique','Busquets','Alonso','Villa','Torres','Silva','Fabregas']
+    players_ita = ['Totti','Del Piero','Buffon','Maldini','Cannavaro','Pirlo','Gattuso','Inzaghi','Toni','Cassano','Vieri']
+    players_fra = ['Zidane','Henry','Platini','Thuram','Desailly','Vieira','Petit','Anelka','Trezeguet','Djorkaeff','Barthez']
+    players_jap = ['Honda','Kagawa','Okazaki','Nagatomo','Yoshida','Uchida','Endo',' Hasebe','Inui','Maeda','Kawashima']
+    
+    sport = Sport("Futbol", 11, "FIFA")
+    team_mex = Team("Mexico", sport)
+    team_arg = Team("Argentina", sport)
+    team_bra = Team("Brazil", sport)
+    team_ger = Team("Germany", sport)
+    team_esp = Team("Spain", sport)
+    team_ita = Team("Italy", sport)
+    team_fra = Team("France", sport)
+    team_jap = Team("Japan", sport)
+    for player in players_mex:
+        team_mex.add_athlete(Athlete(player))
+    for player in players_arg:
+        team_arg.add_athlete(Athlete(player))
+    for player in players_bra:
+        team_bra.add_athlete(Athlete(player))
+    for player in players_ger:
+        team_ger.add_athlete(Athlete(player))
+    for player in players_esp:
+        team_esp.add_athlete(Athlete(player))
+    for player in players_ita:
+        team_ita.add_athlete(Athlete(player))
+    for player in players_fra:
+        team_fra.add_athlete(Athlete(player))
+    for player in players_jap:
+        team_jap.add_athlete(Athlete(player))
+    tournament_list = [team_mex, team_arg, team_bra, team_ger, team_esp, team_ita, team_fra, team_jap]
+    for team in tournament_list:
+        json_string += f"{team.to_json()}\n"
+    return json_string
+       
+
 if __name__ == "__main__":
     string_game = a_game()
     save_game_to_json(string_game, "game.json")
+    print(string_game)

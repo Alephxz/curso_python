@@ -1,0 +1,114 @@
+{
+    "team_a": {
+        "name": "Mexico",
+        "sport": {
+            "name": "Futbol",
+            "league": "FIFA",
+            "num_players": 11
+        },
+        "athletes": [
+            {
+                "name": "Chicharito",
+                "number": 48
+            },
+            {
+                "name": "Piojo",
+                "number": 66
+            },
+            {
+                "name": "Guardado",
+                "number": 49
+            },
+            {
+                "name": "Hector Moreno",
+                "number": 96
+            },
+            {
+                "name": "Rafa Marquez",
+                "number": 69
+            },
+            {
+                "name": "Salcido",
+                "number": 31
+            },
+            {
+                "name": "Vela",
+                "number": 52
+            },
+            {
+                "name": "Dos Santos",
+                "number": 15
+            },
+            {
+                "name": "Herrera",
+                "number": 62
+            },
+            {
+                "name": "Layun",
+                "number": 61
+            },
+            {
+                "name": "Corona",
+                "number": 53
+            }
+        ]
+    },
+    "team_b": {
+        "name": "Argentina",
+        "sport": {
+            "name": "Futbol",
+            "league": "FIFA",
+            "num_players": 11
+        },
+        "athletes": [
+            {
+                "name": "Messi",
+                "number": 45
+            },
+            {
+                "name": "Di Maria",
+                "number": 37
+            },
+            {
+                "name": "Aguero",
+                "number": 13
+            },
+            {
+                "name": "Higuain",
+                "number": 87
+            },
+            {
+                "name": "Mascherano",
+                "number": 18
+            },
+            {
+                "name": "Biglia",
+                "number": 12
+            },
+            {
+                "name": "Dybala",
+                "number": 55
+            },
+            {
+                "name": "Paredes",
+                "number": 58
+            },
+            {
+                "name": "Tagliafico",
+                "number": 82
+            },
+            {
+                "name": "Otamendi",
+                "number": 57
+            },
+            {
+                "name": "Zabaleta",
+                "number": 69
+            }
+        ]
+    },
+    "score": {
+        "Mexico": 0,
+        "Argentina": 0
+    }
+}
