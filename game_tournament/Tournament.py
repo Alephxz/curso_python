@@ -80,14 +80,32 @@ class Tournament:
         print(f"Tournament: {self.name}")
         for group in self.groups:
             self.groups[group].display_group()
+        self.display_games()
+    def display_games(self):
+        """ Display the games. """
         for group in self.groups:
             self.groups[group].display_group_games()
-
+    def play_games(self):
+        """ Play the games. """
+        for group in self.groups:
+            self.groups[group].play_group_games()
+        self.display_games()
+        self.display_standings()
+    def display_standings(self):
+        """ Display the standings of the tournament. """
+        for group in self.groups:
+            self.groups[group].display_standings()
+    def get_qualified_teams(sef):
+        qualified_teams = []
+        for group in self.groups:
+            qualified_teams.append(self.group)
 if __name__ == "__main__":
     tournament = Tournament("FIFA World Cup")
     tournament.load_json("tournament.json")
     tournament.set_group_stage()
     tournament.display_tournament()
+   # tournament.set_games()
+    tournament.display_games()
     #print(tournament.groups['Group A'].games)
     #print(tournament.groups['Group B'].games)
    # print(tournament)

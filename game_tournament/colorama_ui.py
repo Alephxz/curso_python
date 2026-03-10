@@ -53,12 +53,6 @@ class ColoramaUI:
         # Reset and clear for menu
         print(Style.RESET_ALL, end="")
         os.system("cls" if os.name == "nt" else "clear")
-    def play_games(self):
-        print(Back.CYAN + Fore.WHITE, end="")
-        os.system("cls" if os.name == "nt" else "clear")
-        print(str(self.tournament))
-        self.tournament.play_games()
-        print(Style.RESET_ALL, end="")
     def exit_app(self):
         """ Exit the application """
         print("Exiting application...")
@@ -83,8 +77,8 @@ class ColoramaUI:
             "1": self.get_tournament_json,
             "2": self.display_tournament,
             "3": self.display_groups,
-            #"4": self.display_games,
-            #"5": self.play_games,
+            "4": self.display_games,
+            "5": self.play_games,
             "6": self.exit_app
         }
         while True:
@@ -101,17 +95,31 @@ class ColoramaUI:
         # Set colors before clearing screen to fill background
         print(Back.CYAN + Fore.WHITE, end="")
         os.system("cls" if os.name == "nt" else "clear")
-
         print(str(self.tournament))
         for group in self.tournament.groups.keys():
             print(Back.GREEN + Fore.WHITE, end="")
             self.tournament.groups[group].display_group()
             print(Style.RESET_ALL + Back.CYAN + Fore.WHITE, end="") # Preserve background
-        
         print(Style.RESET_ALL, end="") # Final reset for the text block
-        
         # Reset and clear for menu
         print(Style.RESET_ALL, end="")
+    def display_games(self):
+        """ Display games """
+        # Set colors before clearing screen to fill background
+        print(Back.CYAN + Fore.WHITE, end="")
+        os.system("cls" if os.name == "nt" else "clear")
+        print(str(self.tournament))
+        self.tournament.display_games()
+        print(Style.RESET_ALL, end="") # Final reset for the text block
+    def play_games(self):
+        """ Play games """
+        # Set colors before clearing screen to fill background
+        print(Back.CYAN + Fore.WHITE, end="")
+        os.system("cls" if os.name == "nt" else "clear")
+        print(str(self.tournament))
+        self.tournament.play_games()
+        print(Style.RESET_ALL, end="") # Final reset for the text block
+
         
 if __name__ == "__main__":
     ui = ColoramaUI()
