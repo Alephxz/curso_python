@@ -109,3 +109,4 @@ if __name__ == "__main__":
     #print(tournament.groups['Group A'].games)
     #print(tournament.groups['Group B'].games)
    # print(tournament)
+   
