@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Libra Online Library - Search by Author{% endblock %}
+{% block body %}
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{ book.image_url }}" alt="{{ book.title }}">
+    <div class="card-body">
+        <h5 class="card-title">{{ book.title }}</h5>
+        <p class="card-text">{{ book.author }}, {{ book.genre }}</p>
+    </div>
+
+    <div class="card-body">
+
+    </div>
+</div>
+{% endblock %}

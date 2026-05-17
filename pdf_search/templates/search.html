@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}PDF Search - Search by phrase or word{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <h1>Search PDFs</h1>
+    <form action="/search" method="post" class="mb-4">
+        <div class="input-group">
+            <input type="text" id="query" name="query" class="form-control" placeholder="Enter a word or phrase to search...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    
+    {% if query_text %}
+        <p>Results for: <strong>{{ query_text }}</strong></p>
+    {% endif %}
+
+    <div class="row">
+        {% for item in pdfs_list %}
+        <div class="col-md-4 mb-3">
+            <div class="card book-card">
+                <img class="card-img-top book-img p-3" src="{{ item.pdf.image_url }}" alt="{{ item.pdf.title }}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ item.pdf.title }}</h5>
+                    {% if item.snippet %}
+                        <p class="card-text text-muted small mt-2 border-top pt-2" style="text-align: left; font-style: italic;">
+                            {{ item.snippet | safe }}
+                        </p>
+                    {% endif %}
+                    <a href="/pdf/{{ item.pdf.id }}" class="btn btn-outline-primary mt-2">View details</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <p>No PDFs found matching your search.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

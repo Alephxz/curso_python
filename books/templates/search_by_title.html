@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Libra Online Library - Search by title{% endblock %}
+{% block body %}
+<h1>Search by title</h1>
+<form action="/search_by_title" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title">
+    <input type="submit" value="Search">
+</form>
+<ul>
+    {% for book in books_list %}
+    <li><a href="/book/{{ book.id }}">{{ book.title }}</a> by {{ book.title }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
