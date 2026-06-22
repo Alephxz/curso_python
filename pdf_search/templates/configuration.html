@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Configuration{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <h1>Configuration</h1>
+    <p class="text-muted">Add new URLs to the scrapper configuration.</p>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Add New URL</h5>
+            <form action="/config/add" method="POST" class="row g-3 align-items-center">
+                <div class="col-md-10">
+                    <input type="url" class="form-control" id="url" name="url" placeholder="https://example.com/documents/" required>
+                </div>
+                <div class="col-md-2 text-end">
+                    <button type="submit" class="btn btn-primary w-100">ADD</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h4>Added URLs</h4>
+    {% if urls %}
+    <ul class="list-group shadow-sm">
+        {% for item in urls %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ item.url }}
+            {% if item.scraped %}
+            <span class="badge bg-success rounded-pill">Scraped</span>
+            {% else %}
+            <span class="badge bg-secondary rounded-pill">Pending</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="alert alert-light border">
+        No URLs have been added yet. Use the form above to add one.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

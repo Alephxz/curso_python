@@ -4,8 +4,14 @@
 """
 import os
 import requests
+# pyrefly: ignore [missing-import]
 from bs4 import BeautifulSoup
+# pyrefly: ignore [missing-import]
 from markitdown import MarkItDown
+import fitz
+import pytesseract
+from PIL import Image
+import io
 
 class pdf_document:
     def __init__(self, url, download_path, markdown_path):
@@ -17,12 +23,45 @@ class pdf_document:
 
     def convert_pdf_to_markdown(self):
         try:
-            converter = MarkItDown()
-            result = converter.convert(self.download_path)
-            markdown_content = result.markdown or result.text_content
-            with open(self.markdown_path, 'w', encoding='utf-8') as f:
-                f.write(markdown_content)
-            self.content = markdown_content    
+            if os.path.exists(self.markdown_path):
+                with open(self.markdown_path, 'r', encoding='utf-8') as f:
+                    self.content = f.read()
+            else:
+                doc = fitz.open(self.download_path)
+                full_text = ""
+                
+                tesseract_path = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+                if os.path.exists(tesseract_path):
+                    pytesseract.pytesseract.tesseract_cmd = tesseract_path
+
+                for page_num in range(len(doc)):
+                    page = doc.load_page(page_num)
+                    page_text = page.get_text()
+                    
+                    if len(page_text.strip()) < 50:
+                        try:
+                            # Resolution zoom for OCR
+                            pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))
+                            img = Image.open(io.BytesIO(pix.tobytes("png")))
+                            # Tesseract OCR extraction
+                            ocr_text = pytesseract.image_to_string(img)
+                            full_text += ocr_text + "\n\n"
+                        except Exception as ocr_e:
+                            print(f"Error OCR on page {page_num}: {ocr_e}")
+                            full_text += page_text + "\n\n"
+                    else:
+                        full_text += page_text + "\n\n"
+                
+                # Fallback to markitdown if everything is empty
+                if not full_text.strip():
+                    converter = MarkItDown()
+                    result = converter.convert(self.download_path)
+                    markdown_content = result.markdown or result.text_content
+                    full_text = markdown_content
+                    
+                with open(self.markdown_path, 'w', encoding='utf-8') as f:
+                    f.write(full_text)
+                self.content = full_text    
         except Exception as e:
             print(f"Error converting PDF to Markdown: {e}")
 
@@ -77,7 +116,7 @@ def download_pdf(url, filename):
     except requests.exceptions.RequestException as e:
         print(f"Error downloading the PDF: {e}")
 
-def get_pdfs(url="https://fi-ing.unison.mx/acuerdos-de-sesiones-del-h-colegio-de-la-facultad-interdisciplinaria-de-ingenieria-2026/"):
+def get_pdfs(url):
     download_path = "downloaded_pdfs"
     markdown_path = "markdown_files"
     if not os.path.exists(download_path):

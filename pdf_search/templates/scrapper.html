@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Scrapper Management{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <h1>Scrapper Management</h1>
+    <p class="text-muted">Manage your URLs and download PDF documents.</p>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            {% for item in urls %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-truncate" style="max-width: 70%;" title="{{ item.url }}">
+                        {{ item.url }}
+                    </h5>
+                    <div>
+                        {% if item.scraped %}
+                        <span class="badge bg-success me-2">Scraped</span>
+                        {% else %}
+                        <span class="badge bg-secondary me-2">Not Scraped</span>
+                        {% endif %}
+
+                        <form action="/scrapper/scrape" method="POST" class="d-inline">
+                            <input type="hidden" name="url" value="{{ item.url }}">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                {% if item.scraped %}Re-Scrape{% else %}Scrape{% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Downloaded Files:</h6>
+                    {% if item.files %}
+                        <ul class="list-group list-group-flush">
+                            {% for file in item.files %}
+                            <li class="list-group-item"><i class="bi bi-file-earmark-pdf text-danger"></i> {{ file }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="card-text text-muted fst-italic">No files downloaded yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                No URLs configured. Please go to <a href="/config" class="alert-link">Configuration</a> to add new URLs.
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
